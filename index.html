@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario de Accesorios de Izaje</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .form-section {
+            padding: 40px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2a5298;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232a5298' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 40px;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .conditional-fields {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 2px dashed #e0e0e0;
+            display: none !important;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .conditional-fields.active {
+            display: block !important;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(42, 82, 152, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+        }
+        
+        .inventory-table {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        
+        .inventory-table h2 {
+            color: #2a5298;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        th {
+            background: #2a5298;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .status-operativo {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-inoperativo {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: #6c757d;
+        }
+        
+        .empty-state svg {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            table {
+                font-size: 0.85em;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏗️ Inventario de Accesorios de Izaje</h1>
+            <p>Sistema de Control y Gestión de Equipos de Izaje</p>
+        </div>
+        
+        <div class="form-section">
+            <form id="inventoryForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="tipoGrua">Tipo de Grúa</label>
+                        <select id="tipoGrua" required>
+                            <option value="">Seleccione una opción</option>
+                            <option value="DEMAG">DEMAG</option>
+                            <option value="PPM01">PPM01</option>
+                            <option value="PPM02">PPM02</option>
+                            <option value="ATF80-4">ATF80-4</option>
+                            <option value="TEREX">TEREX</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="accesorio">Accesorio</label>
+                        <select id="accesorio" required>
+                            <option value="">Seleccione una opción</option>
+                            <option value="Eslinga">Eslinga</option>
+                            <option value="Grillete">Grillete</option>
+                            <option value="Cadena">Cadena</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="codigo">Código</label>
+                        <input type="text" id="codigo" required placeholder="Ingrese el código">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="capacidad">Capacidad (Ton)</label>
+                        <input type="number" id="capacidad" step="0.1" min="0" required placeholder="0.0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="marca">Marca</label>
+                        <input type="text" id="marca" required placeholder="Ingrese la marca">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cantidad">Unidades / Cantidad</label>
+                        <input type="number" id="cantidad" min="1" value="1" required placeholder="1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="estado">Estado</label>
+                        <select id="estado" required>
+                            <option value="">Seleccione una opción</option>
+                            <option value="Operativo">Operativo</option>
+                            <option value="Inoperativo">Inoperativo</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fechaInspeccion">Fecha de Inspección</label>
+                        <input type="date" id="fechaInspeccion" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="proximaInspeccion">Próxima Inspección</label>
+                        <input type="date" id="proximaInspeccion" readonly style="background: #f0f0f0;">
+                    </div>
+                </div>
+                
+                <!-- Campos condicionales para Eslinga -->
+                <div id="eslingaFields" class="conditional-fields">
+                    <h3 style="color: #2a5298; margin-bottom: 15px;">Datos específicos de Eslinga</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="numeroCapas">Número de Capas</label>
+                            <input type="number" id="numeroCapas" min="1" placeholder="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="longitud">Longitud (metros)</label>
+                            <input type="number" id="longitud" step="0.1" min="0" placeholder="0.0">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Campos condicionales para Grillete y Cadena -->
+                <div id="diametroFields" class="conditional-fields">
+                    <h3 style="color: #2a5298; margin-bottom: 15px;">Datos específicos</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="diametro">Diámetro (pulgadas)</label>
+                            <input type="number" id="diametro" step="0.125" min="0" placeholder="0.0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea id="observaciones" placeholder="Ingrese observaciones adicionales..."></textarea>
+                </div>
+                
+                <div class="button-group">
+                    <button type="submit" class="btn-primary">Agregar al Inventario</button>
+                    <button type="button" class="btn-secondary" onclick="exportToCSV()">Exportar a CSV</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="inventory-table" id="inventoryTableSection" style="display: none;">
+            <h2>📋 Inventario Actual</h2>
+            <table id="inventoryTable">
+                <thead>
+                    <tr>
+                        <th>Tipo de Grúa</th>
+                        <th>Accesorio</th>
+                        <th>Código</th>
+                        <th>Capacidad (Ton)</th>
+                        <th>Marca</th>
+                        <th>Cantidad</th>
+                        <th>Estado</th>
+                        <th>Fecha Inspección</th>
+                        <th>Próxima Inspección</th>
+                        <th>Detalles</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody id="inventoryBody">
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="empty-state" id="emptyState">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            <h3>No hay elementos en el inventario</h3>
+            <p>Agregue accesorios usando el formulario anterior</p>
+        </div>
+    </div>
+    
+    <script>
+        // Array para almacenar los datos del inventario
+        let inventory = [];
+        
+        // Función para calcular la próxima inspección (1 mes después)
+        function calculateNextInspection(date) {
+            const nextDate = new Date(date);
+            nextDate.setMonth(nextDate.getMonth() + 1);
+            return nextDate.toISOString().split('T')[0];
+        }
+        
+        // Actualizar fecha de próxima inspección automáticamente
+        document.getElementById('fechaInspeccion').addEventListener('change', function() {
+            const nextDate = calculateNextInspection(this.value);
+            document.getElementById('proximaInspeccion').value = nextDate;
+        });
+        
+        // Mostrar/ocultar campos condicionales según el accesorio
+        document.getElementById('accesorio').addEventListener('change', function() {
+            const eslingaFields = document.getElementById('eslingaFields');
+            const diametroFields = document.getElementById('diametroFields');
+            
+            // Ocultar todos los campos condicionales
+            eslingaFields.classList.remove('active');
+            diametroFields.classList.remove('active');
+            eslingaFields.style.display = 'none';
+            diametroFields.style.display = 'none';
+            
+            // Mostrar campos según el accesorio seleccionado
+            if (this.value === 'Eslinga') {
+                eslingaFields.classList.add('active');
+                eslingaFields.style.display = 'block';
+            } else if (this.value === 'Grillete' || this.value === 'Cadena') {
+                diametroFields.classList.add('active');
+                diametroFields.style.display = 'block';
+            }
+        });
+        
+        // Manejar el envío del formulario
+        document.getElementById('inventoryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Recolectar datos del formulario
+            const formData = {
+                tipoGrua: document.getElementById('tipoGrua').value,
+                accesorio: document.getElementById('accesorio').value,
+                codigo: document.getElementById('codigo').value,
+                capacidad: parseFloat(document.getElementById('capacidad').value),
+                marca: document.getElementById('marca').value,
+                cantidad: parseInt(document.getElementById('cantidad').value),
+                estado: document.getElementById('estado').value,
+                fechaInspeccion: document.getElementById('fechaInspeccion').value,
+                proximaInspeccion: document.getElementById('proximaInspeccion').value,
+                observaciones: document.getElementById('observaciones').value
+            };
+            
+            // Agregar campos específicos según el accesorio
+            if (formData.accesorio === 'Eslinga') {
+                formData.numeroCapas = document.getElementById('numeroCapas').value || '-';
+                formData.longitud = document.getElementById('longitud').value || '-';
+                formData.diametro = '-';
+            } else if (formData.accesorio === 'Grillete' || formData.accesorio === 'Cadena') {
+                formData.numeroCapas = '-';
+                formData.longitud = '-';
+                formData.diametro = document.getElementById('diametro').value || '-';
+            } else {
+                formData.numeroCapas = '-';
+                formData.longitud = '-';
+                formData.diametro = '-';
+            }
+            
+            // Agregar al inventario
+            inventory.push(formData);
+            
+            // Actualizar la tabla
+            updateInventoryTable();
+            
+            // Limpiar el formulario
+            this.reset();
+            document.getElementById('proximaInspeccion').value = '';
+            
+            // Ocultar campos condicionales
+            document.getElementById('eslingaFields').classList.remove('active');
+            document.getElementById('diametroFields').classList.remove('active');
+            document.getElementById('eslingaFields').style.display = 'none';
+            document.getElementById('diametroFields').style.display = 'none';
+            
+            // Mostrar mensaje de éxito
+            showSuccessMessage();
+        });
+        
+        // Actualizar la tabla de inventario
+        function updateInventoryTable() {
+            const tbody = document.getElementById('inventoryBody');
+            const emptyState = document.getElementById('emptyState');
+            const tableSection = document.getElementById('inventoryTableSection');
+            
+            if (inventory.length === 0) {
+                emptyState.style.display = 'block';
+                tableSection.style.display = 'none';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            tableSection.style.display = 'block';
+            
+            tbody.innerHTML = inventory.map((item, index) => {
+                let detalles = '';
+                if (item.accesorio === 'Eslinga') {
+                    detalles = `Capas: ${item.numeroCapas}, Long: ${item.longitud}m`;
+                } else if (item.accesorio === 'Grillete' || item.accesorio === 'Cadena') {
+                    detalles = `Diám: ${item.diametro}"`;
+                } else {
+                    detalles = '-';
+                }
+                
+                return `
+                    <tr>
+                        <td>${item.tipoGrua}</td>
+                        <td>${item.accesorio}</td>
+                        <td>${item.codigo}</td>
+                        <td>${item.capacidad}</td>
+                        <td>${item.marca}</td>
+                        <td>${item.cantidad}</td>
+                        <td><span class="status-badge status-${item.estado.toLowerCase()}">${item.estado}</span></td>
+                        <td>${formatDate(item.fechaInspeccion)}</td>
+                        <td>${formatDate(item.proximaInspeccion)}</td>
+                        <td>${detalles}</td>
+                        <td>${item.observaciones || '-'}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // Formatear fecha para mostrar
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-PE', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+        
+        // Exportar a CSV
+        function exportToCSV() {
+            if (inventory.length === 0) {
+                alert('No hay datos para exportar');
+                return;
+            }
+            
+            // Preparar los headers
+            const headers = [
+                'Tipo de Grúa',
+                'Accesorio',
+                'Código',
+                'Capacidad (Ton)',
+                'Marca',
+                'Cantidad',
+                'Estado',
+                'Fecha de Inspección',
+                'Próxima Inspección',
+                'N° Capas',
+                'Longitud (m)',
+                'Diámetro (pulg)',
+                'Observaciones'
+            ];
+            
+            // Convertir datos a CSV
+            const csvContent = [
+                headers.join(','),
+                ...inventory.map(item => [
+                    item.tipoGrua,
+                    item.accesorio,
+                    item.codigo,
+                    item.capacidad,
+                    item.marca,
+                    item.cantidad,
+                    item.estado,
+                    item.fechaInspeccion,
+                    item.proximaInspeccion,
+                    item.numeroCapas,
+                    item.longitud,
+                    item.diametro,
+                    `"${item.observaciones || ''}"`
+                ].join(','))
+            ].join('\n');
+            
+            // Crear el archivo y descargarlo
+            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `inventario_izaje_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Mostrar mensaje de éxito
+        function showSuccessMessage() {
+            const message = document.createElement('div');
+            message.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease;
+                z-index: 1000;
+            `;
+            message.textContent = '✓ Accesorio agregado exitosamente';
+            
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => document.body.removeChild(message), 300);
+            }, 3000);
+        }
+        
+        // Agregar animación para el mensaje
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideOut {
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
