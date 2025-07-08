@@ -19,7 +19,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
@@ -45,8 +45,142 @@
             opacity: 0.9;
         }
         
-        .form-section {
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 3px solid #e0e0e0;
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 15px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #666;
+            position: relative;
+        }
+        
+        .nav-tab:hover {
+            background: #e9ecef;
+        }
+        
+        .nav-tab.active {
+            color: #2a5298;
+            background: white;
+        }
+        
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #2a5298;
+        }
+        
+        .tab-content {
+            display: none;
             padding: 40px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Dashboard Styles */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dashboard-card h3 {
+            color: #2a5298;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: width 0.5s ease;
+        }
+        
+        .alert-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 2px;
+        }
+        
+        .alert-vencida {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .alert-por-vencer {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .alert-al-dia {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        /* Form Styles */
+        .form-section {
+            padding: 0;
         }
         
         .form-grid {
@@ -99,6 +233,34 @@
         textarea {
             resize: vertical;
             min-height: 100px;
+        }
+        
+        /* Photo Upload Styles */
+        .photo-upload-area {
+            border: 2px dashed #e0e0e0;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            background: #f8f9fa;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .photo-upload-area:hover {
+            border-color: #2a5298;
+            background: #f0f4f8;
+        }
+        
+        .photo-preview {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .photo-preview img {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .conditional-fields {
@@ -164,6 +326,16 @@
         .btn-secondary:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+        }
+        
+        .btn-photo {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+        }
+        
+        .btn-photo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(23, 162, 184, 0.3);
         }
         
         .inventory-table {
@@ -239,8 +411,59 @@
             opacity: 0.3;
         }
         
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #2a5298;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #2a5298;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+            z-index: 1000;
+        }
+        
+        @keyframes slideOut {
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+        
         @media (max-width: 768px) {
             .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -266,10 +489,73 @@
     <div class="container">
         <div class="header">
             <h1>🏗️ Inventario de Accesorios de Izaje</h1>
-            <p>Sistema de Control y Gestión de Equipos de Izaje</p>
+            <p>Sistema de Control y Gestión de Equipos de Izaje con Google Sheets</p>
         </div>
         
-        <div class="form-section">
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="switchTab('dashboard')">📊 Dashboard</div>
+            <div class="nav-tab" onclick="switchTab('form')">➕ Agregar Nuevo</div>
+            <div class="nav-tab" onclick="switchTab('inventory')">📋 Inventario</div>
+        </div>
+        
+        <!-- Dashboard Tab -->
+        <div id="dashboard-tab" class="tab-content active">
+            <div class="loading" id="dashboard-loading">
+                <div class="spinner"></div>
+                <p>Cargando dashboard...</p>
+            </div>
+            
+            <div id="dashboard-content" style="display: none;">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>📊 Estado General</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-operativo" style="width: 0%">
+                                0%
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <span>Total de equipos:</span>
+                            <span class="stat-value" id="stat-total">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>✅ Operativos:</span>
+                            <span class="stat-value" id="stat-operativos">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>❌ Inoperativos:</span>
+                            <span class="stat-value" id="stat-inoperativos">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>🔧 Distribución por Tipo</h3>
+                        <div class="stat-row">
+                            <span>🔵 Eslingas:</span>
+                            <span class="stat-value" id="stat-eslingas">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>🟡 Grilletes:</span>
+                            <span class="stat-value" id="stat-grilletes">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>🔴 Cadenas:</span>
+                            <span class="stat-value" id="stat-cadenas">0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>⚠️ Alertas de Inspección por Grúa</h3>
+                    <div id="alertas-container">
+                        <!-- Las alertas se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Form Tab -->
+        <div id="form-tab" class="tab-content">
             <form id="inventoryForm">
                 <div class="form-grid">
                     <div class="form-group">
@@ -334,6 +620,20 @@
                     </div>
                 </div>
                 
+                <!-- Photo Upload Area -->
+                <div class="photo-upload-area">
+                    <h3>📷 Foto del Accesorio</h3>
+                    <p>Haz clic para tomar o seleccionar una foto</p>
+                    <input type="file" id="photoInput" accept="image/*" capture="environment" style="display: none;">
+                    <button type="button" class="btn-photo" onclick="document.getElementById('photoInput').click()">
+                        Seleccionar Foto
+                    </button>
+                    <div class="photo-preview" id="photoPreview">
+                        <p>Vista previa:</p>
+                        <img id="previewImage" src="" alt="Vista previa">
+                    </div>
+                </div>
+                
                 <!-- Campos condicionales para Eslinga -->
                 <div id="eslingaFields" class="conditional-fields">
                     <h3 style="color: #2a5298; margin-bottom: 15px;">Datos específicos de Eslinga</h3>
@@ -365,6 +665,11 @@
                     <textarea id="observaciones" placeholder="Ingrese observaciones adicionales..."></textarea>
                 </div>
                 
+                <div class="loading" id="form-loading">
+                    <div class="spinner"></div>
+                    <p>Guardando en Google Sheets...</p>
+                </div>
+                
                 <div class="button-group">
                     <button type="submit" class="btn-primary">Agregar al Inventario</button>
                     <button type="button" class="btn-secondary" onclick="exportToCSV()">Exportar a CSV</button>
@@ -372,41 +677,82 @@
             </form>
         </div>
         
-        <div class="inventory-table" id="inventoryTableSection" style="display: none;">
-            <h2>📋 Inventario Actual</h2>
-            <table id="inventoryTable">
-                <thead>
-                    <tr>
-                        <th>Tipo de Grúa</th>
-                        <th>Accesorio</th>
-                        <th>Código</th>
-                        <th>Capacidad (Ton)</th>
-                        <th>Marca</th>
-                        <th>Cantidad</th>
-                        <th>Estado</th>
-                        <th>Fecha Inspección</th>
-                        <th>Próxima Inspección</th>
-                        <th>Detalles</th>
-                        <th>Observaciones</th>
-                    </tr>
-                </thead>
-                <tbody id="inventoryBody">
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="empty-state" id="emptyState">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
-            <h3>No hay elementos en el inventario</h3>
-            <p>Agregue accesorios usando el formulario anterior</p>
+        <!-- Inventory Tab -->
+        <div id="inventory-tab" class="tab-content">
+            <div class="loading" id="inventory-loading">
+                <div class="spinner"></div>
+                <p>Cargando inventario...</p>
+            </div>
+            
+            <div class="inventory-table" id="inventoryTableSection" style="display: none;">
+                <h2>📋 Inventario Actual</h2>
+                <table id="inventoryTable">
+                    <thead>
+                        <tr>
+                            <th>Tipo de Grúa</th>
+                            <th>Accesorio</th>
+                            <th>Código</th>
+                            <th>Capacidad (Ton)</th>
+                            <th>Marca</th>
+                            <th>Cantidad</th>
+                            <th>Estado</th>
+                            <th>Fecha Inspección</th>
+                            <th>Próxima Inspección</th>
+                            <th>Detalles</th>
+                            <th>Observaciones</th>
+                            <th>Foto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryBody">
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="empty-state" id="emptyState">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                <h3>No hay elementos en el inventario</h3>
+                <p>Agregue accesorios usando el formulario anterior</p>
+            </div>
         </div>
     </div>
     
     <script>
-        // Array para almacenar los datos del inventario
+        // Configuración de la API
+        const API_URL = 'https://script.google.com/macros/s/AKfycbyLOBu_ZpJGdLbwdK0UWvsd5-WiwIp2YB4_-GpkxZNDelgVtJaaGASunEbdOJ1w3x0pmA/exec';
+        
+        // Array para almacenar los datos del inventario localmente
         let inventory = [];
+        
+        // Variable para almacenar la foto seleccionada
+        let selectedPhoto = null;
+        
+        // Función para cambiar de pestaña
+        function switchTab(tabName) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Desactivar todos los botones de navegación
+            document.querySelectorAll('.nav-tab').forEach(nav => {
+                nav.classList.remove('active');
+            });
+            
+            // Activar la pestaña seleccionada
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Activar el botón de navegación correspondiente
+            event.target.classList.add('active');
+            
+            // Cargar datos según la pestaña
+            if (tabName === 'dashboard') {
+                loadDashboard();
+            } else if (tabName === 'inventory') {
+                loadInventory();
+            }
+        }
         
         // Función para calcular la próxima inspección (1 mes después)
         function calculateNextInspection(date) {
@@ -442,58 +788,183 @@
             }
         });
         
+        // Manejar la selección de foto
+        document.getElementById('photoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    selectedPhoto = e.target.result;
+                    document.getElementById('previewImage').src = selectedPhoto;
+                    document.getElementById('photoPreview').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
         // Manejar el envío del formulario
-        document.getElementById('inventoryForm').addEventListener('submit', function(e) {
+        document.getElementById('inventoryForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            // Mostrar loading
+            document.getElementById('form-loading').classList.add('active');
             
             // Recolectar datos del formulario
             const formData = {
-                tipoGrua: document.getElementById('tipoGrua').value,
+                tipo_grua: document.getElementById('tipoGrua').value,
                 accesorio: document.getElementById('accesorio').value,
                 codigo: document.getElementById('codigo').value,
                 capacidad: parseFloat(document.getElementById('capacidad').value),
                 marca: document.getElementById('marca').value,
                 cantidad: parseInt(document.getElementById('cantidad').value),
                 estado: document.getElementById('estado').value,
-                fechaInspeccion: document.getElementById('fechaInspeccion').value,
-                proximaInspeccion: document.getElementById('proximaInspeccion').value,
+                fecha_inspeccion: document.getElementById('fechaInspeccion').value,
+                proxima_inspeccion: document.getElementById('proximaInspeccion').value,
                 observaciones: document.getElementById('observaciones').value
             };
             
             // Agregar campos específicos según el accesorio
             if (formData.accesorio === 'Eslinga') {
-                formData.numeroCapas = document.getElementById('numeroCapas').value || '-';
-                formData.longitud = document.getElementById('longitud').value || '-';
-                formData.diametro = '-';
+                formData.numero_capas = document.getElementById('numeroCapas').value || '';
+                formData.longitud = document.getElementById('longitud').value || '';
+                formData.diametro = '';
             } else if (formData.accesorio === 'Grillete' || formData.accesorio === 'Cadena') {
-                formData.numeroCapas = '-';
-                formData.longitud = '-';
-                formData.diametro = document.getElementById('diametro').value || '-';
+                formData.numero_capas = '';
+                formData.longitud = '';
+                formData.diametro = document.getElementById('diametro').value || '';
             } else {
-                formData.numeroCapas = '-';
-                formData.longitud = '-';
-                formData.diametro = '-';
+                formData.numero_capas = '';
+                formData.longitud = '';
+                formData.diametro = '';
             }
             
-            // Agregar al inventario
-            inventory.push(formData);
+            // Agregar URL de foto si existe
+            formData.url_foto = selectedPhoto || '';
             
-            // Actualizar la tabla
-            updateInventoryTable();
-            
-            // Limpiar el formulario
-            this.reset();
-            document.getElementById('proximaInspeccion').value = '';
-            
-            // Ocultar campos condicionales
-            document.getElementById('eslingaFields').classList.remove('active');
-            document.getElementById('diametroFields').classList.remove('active');
-            document.getElementById('eslingaFields').style.display = 'none';
-            document.getElementById('diametroFields').style.display = 'none';
-            
-            // Mostrar mensaje de éxito
-            showSuccessMessage();
+            try {
+                // Enviar datos a Google Sheets
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                // Agregar al inventario local
+                inventory.push(formData);
+                
+                // Limpiar el formulario
+                this.reset();
+                document.getElementById('proximaInspeccion').value = '';
+                selectedPhoto = null;
+                document.getElementById('photoPreview').style.display = 'none';
+                
+                // Ocultar campos condicionales
+                document.getElementById('eslingaFields').classList.remove('active');
+                document.getElementById('diametroFields').classList.remove('active');
+                document.getElementById('eslingaFields').style.display = 'none';
+                document.getElementById('diametroFields').style.display = 'none';
+                
+                // Ocultar loading
+                document.getElementById('form-loading').classList.remove('active');
+                
+                // Mostrar mensaje de éxito
+                showSuccessMessage('Accesorio agregado exitosamente a Google Sheets');
+                
+                // Recargar dashboard si está activo
+                if (document.getElementById('dashboard-tab').classList.contains('active')) {
+                    loadDashboard();
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('form-loading').classList.remove('active');
+                alert('Error al guardar. Por favor intente nuevamente.');
+            }
         });
+        
+        // Función para cargar el dashboard
+        async function loadDashboard() {
+            document.getElementById('dashboard-loading').classList.add('active');
+            document.getElementById('dashboard-content').style.display = 'none';
+            
+            try {
+                const response = await fetch(API_URL + '?action=dashboard');
+                const data = await response.json();
+                
+                // Actualizar estadísticas generales
+                document.getElementById('stat-total').textContent = data.total || 0;
+                document.getElementById('stat-operativos').textContent = data.operativos || 0;
+                document.getElementById('stat-inoperativos').textContent = data.inoperativos || 0;
+                
+                // Actualizar barra de progreso
+                const porcentajeOperativo = data.total > 0 ? (data.operativos / data.total * 100).toFixed(1) : 0;
+                const progressBar = document.getElementById('progress-operativo');
+                progressBar.style.width = porcentajeOperativo + '%';
+                progressBar.textContent = porcentajeOperativo + '% Operativo';
+                
+                // Actualizar distribución por tipo
+                document.getElementById('stat-eslingas').textContent = data.eslingas || 0;
+                document.getElementById('stat-grilletes').textContent = data.grilletes || 0;
+                document.getElementById('stat-cadenas').textContent = data.cadenas || 0;
+                
+                // Actualizar alertas por grúa
+                const alertasContainer = document.getElementById('alertas-container');
+                alertasContainer.innerHTML = '';
+                
+                if (data.alertasPorGrua) {
+                    for (const [grua, alertas] of Object.entries(data.alertasPorGrua)) {
+                        const gruaDiv = document.createElement('div');
+                        gruaDiv.className = 'stat-row';
+                        gruaDiv.innerHTML = `
+                            <strong>🏗️ ${grua}:</strong>
+                            <div>
+                                <span class="alert-badge alert-vencida">🔴 ${alertas.vencidas || 0} Vencidas</span>
+                                <span class="alert-badge alert-por-vencer">🟡 ${alertas.porVencer || 0} Por vencer</span>
+                                <span class="alert-badge alert-al-dia">🟢 ${alertas.alDia || 0} Al día</span>
+                            </div>
+                        `;
+                        alertasContainer.appendChild(gruaDiv);
+                    }
+                }
+                
+                document.getElementById('dashboard-loading').classList.remove('active');
+                document.getElementById('dashboard-content').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error cargando dashboard:', error);
+                document.getElementById('dashboard-loading').classList.remove('active');
+                document.getElementById('dashboard-content').style.display = 'block';
+            }
+        }
+        
+        // Función para cargar el inventario
+        async function loadInventory() {
+            document.getElementById('inventory-loading').classList.add('active');
+            document.getElementById('inventoryTableSection').style.display = 'none';
+            document.getElementById('emptyState').style.display = 'none';
+            
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                
+                if (data && data.length > 0) {
+                    inventory = data;
+                    updateInventoryTable();
+                } else {
+                    document.getElementById('emptyState').style.display = 'block';
+                }
+                
+                document.getElementById('inventory-loading').classList.remove('active');
+                
+            } catch (error) {
+                console.error('Error cargando inventario:', error);
+                document.getElementById('inventory-loading').classList.remove('active');
+                document.getElementById('emptyState').style.display = 'block';
+            }
+        }
         
         // Actualizar la tabla de inventario
         function updateInventoryTable() {
@@ -513,26 +984,31 @@
             tbody.innerHTML = inventory.map((item, index) => {
                 let detalles = '';
                 if (item.accesorio === 'Eslinga') {
-                    detalles = `Capas: ${item.numeroCapas}, Long: ${item.longitud}m`;
+                    detalles = `Capas: ${item.numerocapas || item.numero_capas || '-'}, Long: ${item.longitud || '-'}m`;
                 } else if (item.accesorio === 'Grillete' || item.accesorio === 'Cadena') {
-                    detalles = `Diám: ${item.diametro}"`;
+                    detalles = `Diám: ${item.diametro || '-'}"`;
                 } else {
                     detalles = '-';
                 }
                 
+                const fotoLink = item.urlfoto || item.url_foto ? 
+                    `<a href="${item.urlfoto || item.url_foto}" target="_blank">Ver foto</a>` : 
+                    '-';
+                
                 return `
                     <tr>
-                        <td>${item.tipoGrua}</td>
+                        <td>${item.tipogrua || item.tipo_grua}</td>
                         <td>${item.accesorio}</td>
                         <td>${item.codigo}</td>
-                        <td>${item.capacidad}</td>
+                        <td>${item.capacidadton || item.capacidad}</td>
                         <td>${item.marca}</td>
                         <td>${item.cantidad}</td>
-                        <td><span class="status-badge status-${item.estado.toLowerCase()}">${item.estado}</span></td>
-                        <td>${formatDate(item.fechaInspeccion)}</td>
-                        <td>${formatDate(item.proximaInspeccion)}</td>
+                        <td><span class="status-badge status-${(item.estado || '').toLowerCase()}">${item.estado}</span></td>
+                        <td>${formatDate(item.fechainspeccion || item.fecha_inspeccion)}</td>
+                        <td>${formatDate(item.proximainspeccion || item.proxima_inspeccion)}</td>
                         <td>${detalles}</td>
                         <td>${item.observaciones || '-'}</td>
+                        <td>${fotoLink}</td>
                     </tr>
                 `;
             }).join('');
@@ -540,6 +1016,7 @@
         
         // Formatear fecha para mostrar
         function formatDate(dateString) {
+            if (!dateString) return '-';
             const date = new Date(dateString);
             return date.toLocaleDateString('es-PE', {
                 day: '2-digit',
@@ -569,26 +1046,28 @@
                 'N° Capas',
                 'Longitud (m)',
                 'Diámetro (pulg)',
-                'Observaciones'
+                'Observaciones',
+                'URL Foto'
             ];
             
             // Convertir datos a CSV
             const csvContent = [
                 headers.join(','),
                 ...inventory.map(item => [
-                    item.tipoGrua,
+                    item.tipogrua || item.tipo_grua,
                     item.accesorio,
                     item.codigo,
-                    item.capacidad,
+                    item.capacidadton || item.capacidad,
                     item.marca,
                     item.cantidad,
                     item.estado,
-                    item.fechaInspeccion,
-                    item.proximaInspeccion,
-                    item.numeroCapas,
-                    item.longitud,
-                    item.diametro,
-                    `"${item.observaciones || ''}"`
+                    item.fechainspeccion || item.fecha_inspeccion,
+                    item.proximainspeccion || item.proxima_inspeccion,
+                    item.numerocapas || item.numero_capas || '',
+                    item.longitud || '',
+                    item.diametro || '',
+                    `"${item.observaciones || ''}"`,
+                    item.urlfoto || item.url_foto || ''
                 ].join(','))
             ].join('\n');
             
@@ -607,41 +1086,20 @@
         }
         
         // Mostrar mensaje de éxito
-        function showSuccessMessage() {
-            const message = document.createElement('div');
-            message.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #28a745;
-                color: white;
-                padding: 15px 25px;
-                border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-                animation: slideIn 0.3s ease;
-                z-index: 1000;
-            `;
-            message.textContent = '✓ Accesorio agregado exitosamente';
+        function showSuccessMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'success-message';
+            messageDiv.textContent = '✓ ' + message;
             
-            document.body.appendChild(message);
+            document.body.appendChild(messageDiv);
             
             setTimeout(() => {
-                message.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => document.body.removeChild(message), 300);
+                messageDiv.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => document.body.removeChild(messageDiv), 300);
             }, 3000);
         }
         
-        // Agregar animación para el mensaje
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideOut {
-                to {
-                    transform: translateX(400px);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
-</body>
-</html>
+        // Cargar dashboard al iniciar
+        window.onload = function() {
+            loadDashboard();
+        };
