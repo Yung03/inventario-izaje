@@ -71,4 +71,49 @@ function createInventoryRow(item, index) {
     // Preparar link de foto
     const fotoUrl = item.urlfoto || item.url_foto;
     const fotoLink = fotoUrl 
-        ? `
+        ? `<a href="${fotoUrl}" target="_blank" style="color: #2a5298;">Ver foto</a>`
+        : '-';
+    
+    // Determinar clase CSS para el estado
+    const estadoClass = (item.estado || '').toLowerCase();
+    
+    // Formatear fechas
+    const fechaInspeccion = formatDate(item.fechainspeccion || item.fecha_inspeccion);
+    const proximaInspeccion = formatDate(item.proximainspeccion || item.proxima_inspeccion);
+    
+    // Generar HTML de la fila
+    return `
+        <tr>
+            <td>${item.tipogrua || item.tipo_grua || '-'}</td>
+            <td>${item.accesorio || '-'}</td>
+            <td>${item.codigo || '-'}</td>
+            <td>${item.capacidadton || item.capacidad || '-'}</td>
+            <td>${item.marca || '-'}</td>
+            <td>${item.cantidad || '-'}</td>
+            <td>
+                <span class="status-badge status-${estadoClass}">
+                    ${item.estado || '-'}
+                </span>
+            </td>
+            <td>${fechaInspeccion}</td>
+            <td>${proximaInspeccion}</td>
+            <td>${detalles}</td>
+            <td>${item.observaciones || '-'}</td>
+            <td>${fotoLink}</td>
+        </tr>
+    `;
+}
+
+// Función para filtrar inventario (futura implementación)
+function filterInventory(filterCriteria) {
+    // Esta función se puede expandir para agregar filtros
+    // Por ahora retorna todo el inventario
+    return inventory;
+}
+
+// Función para ordenar inventario (futura implementación)
+function sortInventory(sortBy, order = 'asc') {
+    // Esta función se puede expandir para agregar ordenamiento
+    // Por ahora retorna el inventario sin ordenar
+    return inventory;
+}
